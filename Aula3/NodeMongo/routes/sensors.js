@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var axios = require("axios");
-var SensorController = require("../controller/sensor");
+var SensorModel = require("../model/sensor.js");
 
 router.get("/", (req, res) => {
   res.json({
@@ -15,24 +15,24 @@ router.get("/identificador/:id", (req, res) => {
   });
 });
 
-router.get("/acedehpeixoto/:id", (req, res) => {
-  axios
-    .get("http://nosql.hpeixoto.me/api/sensor/" + req.params.id)
+router.get("/list", (req, res) => {
+  SensorModel.find({})
     .then(async (response) => {
-      const { sensorid, sensornum, type_of_sensor } = response.data;
-      let newSensorResponse = await SensorController.newSensor(
-        sensorid,
-        sensornum,
-        type_of_sensor
-      );
-      if (newSensorResponse.success) {
-        res.status(200).json({ info: "Novo sensor adicionado com sucesso" });
-      } else {
-        res.status(200).json({ info: "Erro ao adicionar novo sensor" });
-      }
+      res.json({ Sensors: response });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      res.json(err);
+    });
+});
+
+router.get("/list/:id", (req, res) => {
+  SensorModel.findOne({ sensorid: req.params.id })
+    .then(async (response) => {
+      res.json({ Sensor: response });
+    })
+    .catch((err) => {
+      // console.log(err);
       res.json(err);
     });
 });

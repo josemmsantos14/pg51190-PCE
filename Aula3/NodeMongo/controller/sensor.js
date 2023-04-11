@@ -1,4 +1,4 @@
-let SensorModel = require("../model/sensor");
+let SensorModel = require("../model/sensor.js");
 
 module.exports.newSensor = async (sensorid, sensornum, type) => {
   try {

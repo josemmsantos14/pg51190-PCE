@@ -8,9 +8,11 @@ module.exports.newClinicalInfo = async (
   systolic,
   diastolic,
   bpm,
-  stato2,
+  sato2,
   timestamp
 ) => {
+  console.log("id- " + clinicalinfoid);
+  console.log("sato2- " + sato2);
   try {
     let bloodPressObj = { systolic: systolic, diastolic: diastolic };
     let clinicalInfo = new ClinicalInfoModel({
@@ -20,9 +22,11 @@ module.exports.newClinicalInfo = async (
       bodyTemp,
       bloodPress: bloodPressObj,
       bpm,
-      stato2,
+      sato2,
       timestamp,
     });
+    console.log("id: " + clinicalInfo.clinicalInfoID);
+    console.log("sato2: " + clinicalInfo.sato2);
     let response = await clinicalInfo.save();
     return {
       success: true,
